@@ -7,12 +7,12 @@ import Featured from '../../components/featured/Featured';
 import Chart from '../../components/chart/Chart';
 import List from '../../components/table/Table';
 
-const Home = () => {
+const Home = ({auth}) => {
   return (
     <div className="home">
         <Sidebar/>
         <div className="homecontainer">
-          <Navbar/>
+          <Navbar user={auth.user}/>
           <div className="widgets">
             <Widget type="user"/>
             <Widget type="order"/>

@@ -4,13 +4,13 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import Navbar from '../../components/navbar/Navbar'
 import { DriveFolderUploadOutlined } from '@mui/icons-material'
 
-const New = ({inputs, title}) => {
+const New = ({inputs, title, auth}) => {
   const [file, setFile] = useState("")
   return (
     <div className='new'>
       <Sidebar/>
       <div className="newContainer">
-        <Navbar/>
+        <Navbar user={auth.user}/>
         <div className="top">
           <h1>{title}</h1>
         </div>

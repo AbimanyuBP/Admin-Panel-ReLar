@@ -9,7 +9,7 @@ const Single = () => {
     <div className='single'>
       <Sidebar/>
       <div className="singleContainer">
-        <Navbar/>
+        <Navbar user={auth.user}/>
         <div className="top">
           <div className="left">
             <div className="editButton">Edit</div>
