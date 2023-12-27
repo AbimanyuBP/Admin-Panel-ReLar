@@ -15,11 +15,17 @@ class checkUserRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->role == "admin"){
-            return $next($request);
+        if ($request->user() != null){
+
+            if ($request->user()->role == "admin"){
+                return $next($request);
+            }
+            else{
+                return redirect()->back();
+            }
         }
         else{
-            return redirect()->back();
+            return $next($request);
         }
     }
 }
