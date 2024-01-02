@@ -40,10 +40,12 @@ const Sidebar = () => {
                         <span>Products</span>
                     </li>
                 </a>
-                <li>
-                    <MopedIcon className="icon"/>
-                    <span>Deliveries</span>
-                </li>
+                <a href={route("yeet")}>
+                    <li>
+                        <MopedIcon className="icon"/>
+                        <span>Deliveries</span>
+                    </li>
+                </a>
                 <p className="title">USEFUL</p>
                 <li>
                     <BarChartIcon className="icon"/>
