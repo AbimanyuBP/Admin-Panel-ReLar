@@ -6,10 +6,12 @@ import Widget from '../../components/widget/widget';
 import Featured from '../../components/featured/Featured';
 import Chart from '../../components/chart/Chart';
 import List from '../../components/table/Table';
+import { Head } from '@inertiajs/react';
 
 const Home = ({auth}) => {
   return (
     <div className="home">
+        <Head title="Dashboard" />
         <Sidebar/>
         <div className="homecontainer">
           <Navbar user={auth.user}/>
