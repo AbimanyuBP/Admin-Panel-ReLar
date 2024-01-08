@@ -4,7 +4,7 @@ import Navbar from '@/Components/navbar/Navbar';
 export default function DashboardLayout({user, children }) {
 
     return (
-        <div class="flex w-full">
+        <div class="flex w-full m-0 p-0">
             <Sidebar/>
             <div class="grow-[3]">
                 <main>
