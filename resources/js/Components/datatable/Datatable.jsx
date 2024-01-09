@@ -1,15 +1,23 @@
 import './datatable.scss'
 import { DataGrid } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 
-const Datatable = ( {list} ) => {
+const Datatable = ( {list, listType} ) => {
+    
+    const [message, setMessage] = useState('');
+
+    const handleRowClick = (params) => {
+      setMessage(params.row.id);
+    };
+    
+
     const userColumns = [
-      { field: "id", headerName: "ID", width: 70 },
+      { field: "id", headerName: "ID", headerAlign: "center", flex: 0.3, align: "center", },
       {
         field: "name",
         headerName: "Name",
-        width: 230,
+        flex: 1,
         renderCell: (params) => {
           return (
             <div className="cellWithImg">
@@ -22,18 +30,22 @@ const Datatable = ( {list} ) => {
       {
         field: "email",
         headerName: "Email",
-        width: 230,
+        flex: 1,
       },
     
       {
         field: "age",
         headerName: "Age",
-        width: 100,
+        headerAlign: "center",
+        flex: 0.4,
+        align: "center",
       },
       {
         field: "status",
         headerName: "Status",
-        width: 160,
+        headerAlign: "center",
+        flex: 0.5,
+        align: "center",
         renderCell: (params) => {
           return (
             <div className={`cellWithStatus ${params.row.status}`}>
@@ -42,46 +54,80 @@ const Datatable = ( {list} ) => {
           );
         },
       },
+      {
+        field: "role",
+        headerName: "Role",
+        headerAlign: "center",
+        flex: 0.4,
+        align: "center",
+      },
     ];
 
-    const actionColumn = [
-        {
-            field: "action",
-            headerName: "Action",
-            width: 200,
-            renderCell : () => {
-                return(
-                    <div className="cellAction">
-                        <a href="id">
-                          <div className="viewButton">View</div>
-                        </a>
-                        <a href="">
-                          <div className="deleteButton">Delete</div>
-                        </a>
-                    </div>
-                )
-            }
-        }
-    ]
+    const productColumns = [
+      { field: "tracking_id", headerName: "Tracking ID", width: 70 },
+      {
+        field: "product",
+        headerName: "Product",
+        width: 230,
+        renderCell: (params) => {
+          return (
+            <div className="cellWithImg">
+              <img className="cellImg" src={params.row.img} alt="avatar" />
+              {params.row.name}
+            </div>
+          );
+        },
+      },
+      {
+        field: "user_id",
+        headerName: "Buyer",
+        width: 230,
+      },
+    
+      {
+        field: "order_at",
+        headerName: "Time of order",
+        width: 100,
+      },
+      {
+        field: "qty",
+        headerName: "Amount",
+        width: 160,
+      },
+      {
+        field: "payment",
+        headerName: "Payment",
+        width: 160,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        width: 160,
+      },
+    ];
+
   return (
     <div className='datatable'>
         <div className="datatableTitle">
-          Users List
-          <a href="" className='link'>Add New</a>
+          {listType == "users" ? "Users" : "Products"} List
+          <div className="buttons">
+            <a href={"/"+listType+"/new"} className='link'>Add New</a>
+            <a href={"/"+listType+"/view/"+message} className={message!==''?'viewButton':'buttonHide'}>View</a>
+            <a href={"/"+listType+"/delete /"+message} className={message!==''?'deleteButton':'buttonHide'}>Delete</a>
+          </div>
         </div>
         <DataGrid
         rows={list}
-        columns={userColumns.concat(actionColumn)}
+        columns={listType == "users" ? userColumns : productColumns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
         pageSizeOptions={[5, 10]}
-        checkboxSelection
+        onRowClick={handleRowClick}
       />
     </div>
-    // <h2>Sadge :p {list[2].name}</h2>
   )
 }
 

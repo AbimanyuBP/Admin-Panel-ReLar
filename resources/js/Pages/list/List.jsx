@@ -6,14 +6,14 @@ import Datatable from '../../components/datatable/Datatable'
 import { Head } from '@inertiajs/react'
 
 
-const List = ({listUsers, auth}) => {
+const List = ({dataList, type, auth}) => {
   return (
     <div className='list'>
       <Head title='List'/>
       <Sidebar/>
       <div className="listContainer">
         <Navbar user={auth.user}/>
-        <Datatable list={listUsers}/>
+        <Datatable list={dataList} listType={type}/>
       </div>
     </div>
   )

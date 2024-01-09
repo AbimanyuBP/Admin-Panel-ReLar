@@ -11,15 +11,39 @@
         align-items: center;
         justify-content: space-between;
 
-        .link{
-            text-decoration: none;
-            color: green;
+        .buttons{
+            display: flex;
+            gap: 10px;
             font-size: 16px;
             font-weight: 400;
-            border: 1px solid green;
-            padding: 5px;
-            border-radius: 5px;
+            .link{
+                text-decoration: none;
+                color: green;
+                border: 1px solid green;
+                padding: 5px;
+                border-radius: 5px;
+            }
+            .viewButton{
+                text-decoration: none;
+                padding: 5px;
+                border-radius: 5px;
+                color: darkblue;
+                border: 1px dotted rgba(0, 0, 139, 0.665);
+            }
+
+            .buttonHide{
+                visibility: hidden;
+            }
+    
+            .deleteButton{
+                text-decoration: none;
+                padding: 5px;
+                border-radius: 5px;
+                color: red;
+                border: 1px dotted rgba(255, 0, 0, 0.375);
+            }
         }
+
     }
 
     .cellWithImg{
@@ -51,26 +75,6 @@
         &.passive {
         background-color: rgba(255, 0, 0, 0.05);
         color: crimson;
-        }
-    }
-
-    .cellAction{
-        display: flex;
-        align-items: center;
-        gap: 15px;
-
-        .viewButton{
-            padding: 2px 5px;
-            border-radius: 5px;
-            color: darkblue;
-            border: 1px dotted rgba(0, 0, 139, 0.665);
-        }
-
-        .deleteButton{
-            padding: 2px 5px;
-            border-radius: 5px;
-            color: red;
-            border: 1px dotted rgba(255, 0, 0, 0.375);
         }
     }
 }
