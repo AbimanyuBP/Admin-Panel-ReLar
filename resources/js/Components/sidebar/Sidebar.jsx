@@ -10,6 +10,7 @@ import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstruct
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Link } from '@inertiajs/react';
 
 const Sidebar = () => {
   return (
@@ -74,8 +75,10 @@ const Sidebar = () => {
                     <span>Profile</span>
                 </li>
                 <li>
-                    <LogoutIcon className="icon"/>
-                    <span>Logout</span>
+                    <Link href={route('logout')} method='post'>
+                        <LogoutIcon className="icon"/>
+                        <span>Logout</span>
+                    </Link>
                 </li>
             </ul>
         </div>
