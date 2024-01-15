@@ -14,7 +14,6 @@ class UsersController extends Controller
     public function index()
     {
         $users = DB::table('users')->select('id', 'name', 'img', 'email', 'age', 'status', 'role')->get();
-        $encoded = json_encode($users);
         $type = "users";
 
         return Inertia::render('list/List', [
