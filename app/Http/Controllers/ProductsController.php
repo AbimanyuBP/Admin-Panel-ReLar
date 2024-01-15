@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class ProductsController extends Controller
 {
@@ -12,7 +14,13 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //
+        $products = DB::table('products')->select('id', 'name', 'qty', 'img')->get();;
+        $type = "products";
+
+        return Inertia::render('list/List', [
+            "dataList" => $products,
+            "type" => $type
+        ]);
     }
 
     /**

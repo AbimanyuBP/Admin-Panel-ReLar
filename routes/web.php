@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ProductsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,10 +36,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/users', [UsersController::class, 'index'])->middleware(['auth', 'verified'])->name('users');
+Route::get('/users/new', [UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('adduser');
+Route::get('/users/view/{id}', [UsersController::class, 'show'])->middleware(['auth', 'verified'])->name('viewuser');
+Route::get('/users/delete/{id}', [UsersController::class, 'destroy'])->middleware(['auth', 'verified'])->name('deleteuser');
 
-Route::get('/products', function () {
-    return Inertia::render('list/List');
-})->middleware(['auth', 'verified'])->name('products');
+Route::get('/products', [ProductsController::class, 'index'])->middleware(['auth', 'verified'])->name('products');
 
 Route::get('/yeet', function () {
     return Inertia::render('login/Login');

@@ -64,10 +64,10 @@ const Datatable = ( {list, listType} ) => {
     ];
 
     const productColumns = [
-      { field: "tracking_id", headerName: "Tracking ID", width: 70 },
+      { field: "id", headerName: "ID", width: 70 },
       {
-        field: "product",
-        headerName: "Product",
+        field: "name",
+        headerName: "Product Name",
         width: 230,
         renderCell: (params) => {
           return (
@@ -79,30 +79,9 @@ const Datatable = ( {list, listType} ) => {
         },
       },
       {
-        field: "user_id",
-        headerName: "Buyer",
-        width: 230,
-      },
-    
-      {
-        field: "order_at",
-        headerName: "Time of order",
-        width: 100,
-      },
-      {
         field: "qty",
-        headerName: "Amount",
-        width: 160,
-      },
-      {
-        field: "payment",
-        headerName: "Payment",
-        width: 160,
-      },
-      {
-        field: "status",
-        headerName: "Status",
-        width: 160,
+        headerName: "Amount in Storage",
+        width: 230,
       },
     ];
 
