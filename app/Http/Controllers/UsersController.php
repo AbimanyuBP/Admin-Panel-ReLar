@@ -43,7 +43,10 @@ class UsersController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = DB::table('users')->where('id', (int) $id)->first();
+        return Inertia::render('ObjectView/ObjectView', [
+            "objectData" => $user,
+        ]);
     }
 
     /**
