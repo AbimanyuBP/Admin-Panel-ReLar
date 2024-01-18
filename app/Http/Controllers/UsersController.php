@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use App\Models\User;
+use Illuminate\Support\Facades\Redirect;
 
 use Illuminate\Http\Request;
 
@@ -46,6 +48,7 @@ class UsersController extends Controller
         $user = DB::table('users')->where('id', (int) $id)->first();
         return Inertia::render('ObjectView/ObjectView', [
             "objectData" => $user,
+            "csrfToken" => csrf_token(),
         ]);
     }
 
@@ -62,7 +65,17 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::find($id);
+        $user->update([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'status' => $request['status'],
+            'age' => $request['age'],
+            'role' => $request['role'],
+            'img' => $request['img'],
+        ]);
+        
+        return Redirect::route('users');
     }
 
     /**

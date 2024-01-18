@@ -39,6 +39,7 @@ Route::get('/users', [UsersController::class, 'index'])->middleware(['auth', 've
 Route::get('/users/new', [UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('adduser');
 Route::get('/users/view/{id}', [UsersController::class, 'show'])->middleware(['auth', 'verified'])->name('viewuser');
 Route::get('/users/delete/{id}', [UsersController::class, 'destroy'])->middleware(['auth', 'verified'])->name('deleteuser');
+Route::put('/users/update/{id}', [UsersController::class, 'update'])->middleware(['auth', 'verified'])->name('updateuser');
 
 Route::get('/products', [ProductsController::class, 'index'])->middleware(['auth', 'verified'])->name('products');
 
