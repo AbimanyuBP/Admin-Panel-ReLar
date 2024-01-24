@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
 
 class ProductsController extends Controller
 {
@@ -14,7 +15,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = DB::table('products')->select('id', 'name', 'qty', 'img')->get();;
+        $products = DB::table('products')->get();
         $type = "products";
 
         return Inertia::render('list/List', [
@@ -42,9 +43,15 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(string $id)
     {
-        //
+        $product = DB::table('products')->where('id', (int) $id)->first();
+        return Inertia::render('ObjectView/ObjectView', [
+            "objectData" => $product,
+            "csrfToken" => csrf_token(),
+            "viewType" => "show",
+            "objectType" => "product",
+        ]);
     }
 
     /**
@@ -58,9 +65,20 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request,  string $id)
     {
-        //
+        $product = Product::find($id);
+        $product->update([
+            'name' => $request['name'],
+            'qty' => $request['qty'],
+            'price' => $request['price'],
+            'weight' => $request['weight'],
+            'availability' => $request['availability'],
+            'category' => $request['category'],
+            'img' => $request['img'],
+        ]);
+        
+        return Redirect::route('products');
     }
 
     /**

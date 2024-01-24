@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/react'
 import React, { useState } from 'react'
 import { router } from '@inertiajs/react'
 
-export default function ObjectView({ auth, objectData, csrfToken }) {
+export default function ObjectView({ auth, objectData, csrfToken, objectType, viewType }) {
     const [file, setFile] = useState("")
     let [editBtn, setEditBtn] = useState(0)
 
@@ -33,62 +33,93 @@ export default function ObjectView({ auth, objectData, csrfToken }) {
 
     const UserData = () => {
         return (
-        <div className=" flex flex-col grow p-3 gap-1">
-            <div className="flex">
-                <div className="ml-auto">
-                    <button onClick={() => setEditBtn(1)} className="bg-green-300 pt-1 pb-1 ps-3 pe-3 rounded-2xl me-2 text-lg">Edit</button>
-                    <a href="" className="bg-red-300 pt-1 pb-1 ps-3 pe-3 rounded-2xl text-lg">Delete</a>
+            <div className=" flex flex-col grow p-3 gap-1">
+                <div className="flex">
+                    <div className="ml-auto">
+                        <button onClick={() => setEditBtn(1)} className="bg-green-300 pt-1 pb-1 ps-3 pe-3 rounded-2xl me-2 text-lg">Edit</button>
+                        <a href="" className="bg-red-300 pt-1 pb-1 ps-3 pe-3 rounded-2xl text-lg">Delete</a>
+                    </div>
                 </div>
+                <form method="POST" className="flex flex-col" action={"/users/update/"+objectData.id}>
+                    <input type="hidden" name="_token" id="token" value={csrfToken}></input>
+                    <label htmlFor="name">Name</label>
+                    <input name="name" id="name" type="text" required className="rounded-2xl" placeholder={objectData.name} disabled={editBtn==0}/>
+                    <label htmlFor="email">Email</label>
+                    <input name="email" id="email" type="text" required className="rounded-2xl" placeholder={objectData.email} disabled={editBtn==0}/>
+                    <label htmlFor="age">Age</label>
+                    <input name="age" id="age" type="number" required className="rounded-2xl" placeholder={objectData.age} disabled={editBtn==0} />
+                    <label htmlFor="status">Status</label>
+                    <select className="rounded-2xl" name="status" id="status" disabled={editBtn==0}>
+                        <option selected value={objectData.status}>{objectData.status}</option>
+                        <option value={objectData.status == "passive" ? "active" : "passive"}>{objectData.status == "passive" ? "active" : "passive"}</option>
+                    </select>
+                    <label htmlFor="role">Role</label>
+                    <select className="rounded-2xl" name="role" id="role" disabled={editBtn==0}>
+                        <option selected value={objectData.role}>{objectData.role}</option>
+                        <option  value={objectData.role == "user" ? "admin" : "user"}>{objectData.role == "user" ? "admin" : "user"}</option>
+                    </select>
+                    <input type="text" name="img" id="img" hidden value={file ? URL.createObjectURL(file) : objectData.img}/>
+                    <input type="hidden" name="_method" value="PUT"></input>
+                    <button type="submit" className="bg-green-500 w-44 pt-2 pb-2 mt-3 text-lg rounded-lg text-white" style={editBtn == 0 ?{visibility:"hidden"}:{visibility:"visible"}}>Submit</button>
+                </form>
+
+                
+                {/* //? Code for future form rework */}
+                {/* <form onSubmit={handleSubmit} className="flex flex-col">
+                    <label htmlFor="name">Name</label>
+                    <input onChange={handleChange} value={values.name} id="name" type="text" className="rounded-2xl" placeholder={objectData.name} disabled={editBtn==0}/>
+                    <label htmlFor="email">Email</label>
+                    <input onChange={handleChange} value={values.email} id="email" type="text" className="rounded-2xl" placeholder={objectData.email} disabled={editBtn==0}/>
+                    <label htmlFor="age">Age</label>
+                    <input onChange={handleChange} value={values.name} id="age" type="number" className="rounded-2xl" placeholder={objectData.age} disabled={editBtn==0} />
+                    <label htmlFor="status">Status</label>
+                    <select onChange={handleChange} className="rounded-2xl" name="status" id="status" disabled={editBtn==0}>
+                        <option selected value={values.status}>{values.status}</option>
+                        <option value={objectData.status == "passive" ? "active" : "passive"}>{objectData.status == "passive" ? "active" : "passive"}</option>
+                    </select>
+                    <label htmlFor="role">Role</label>
+                    <select onChange={handleChange} className="rounded-2xl" name="role" id="role" disabled={editBtn==0}>
+                        <option selected value={values.role}>{values.role}</option>
+                        <option value={objectData.role == "user" ? "admin" : "user"}>{objectData.role == "user" ? "admin" : "user"}</option>
+                    </select>
+                    <input onChange={handleChange} type="text" id="img" hidden value={file ? URL.createObjectURL(file) : values.img}/>
+                    <button type="submit" className="bg-green-500 w-44 pt-2 pb-2 mt-3 text-lg rounded-lg text-white" style={editBtn == 0 ?{visibility:"hidden"}:{visibility:"visible"}}>Submit</button>
+                </form> */}
+
             </div>
-            <form method="POST" className="flex flex-col" action={"/users/update/"+objectData.id}>
-                <input type="hidden" name="_token" id="token" value={csrfToken}></input>
-                <label htmlFor="name">Name</label>
-                <input name="name" id="name" type="text" className="rounded-2xl" placeholder={objectData.name} disabled={editBtn==0}/>
-                <label htmlFor="email">Email</label>
-                <input name="email" id="email" type="text" className="rounded-2xl" placeholder={objectData.email} disabled={editBtn==0}/>
-                <label htmlFor="age">Age</label>
-                <input name="age" id="age" type="number" className="rounded-2xl" placeholder={objectData.age} disabled={editBtn==0} />
-                <label htmlFor="status">Status</label>
-                <select className="rounded-2xl" name="status" id="status" disabled={editBtn==0}>
-                    <option selected value={objectData.status}>{objectData.status}</option>
-                    <option value={objectData.status == "passive" ? "active" : "passive"}>{objectData.status == "passive" ? "active" : "passive"}</option>
-                </select>
-                <label htmlFor="role">Role</label>
-                <select className="rounded-2xl" name="role" id="role" disabled={editBtn==0}>
-                    <option selected value={objectData.role}>{objectData.role}</option>
-                    <option  value={objectData.role == "user" ? "admin" : "user"}>{objectData.role == "user" ? "admin" : "user"}</option>
-                </select>
-                <input type="text" name="img" id="img" hidden value={file ? URL.createObjectURL(file) : objectData.img}/>
-                <input type="hidden" name="_method" value="PUT"></input>
-                <button type="submit" className="bg-green-500 w-44 pt-2 pb-2 mt-3 text-lg rounded-lg text-white" style={editBtn == 0 ?{visibility:"hidden"}:{visibility:"visible"}}>Submit</button>
-            </form>
-
-            
-            {/* //? Code for future form rework */}
-            {/* <form onSubmit={handleSubmit} className="flex flex-col">
-                <label htmlFor="name">Name</label>
-                <input onChange={handleChange} value={values.name} id="name" type="text" className="rounded-2xl" placeholder={objectData.name} disabled={editBtn==0}/>
-                <label htmlFor="email">Email</label>
-                <input onChange={handleChange} value={values.email} id="email" type="text" className="rounded-2xl" placeholder={objectData.email} disabled={editBtn==0}/>
-                <label htmlFor="age">Age</label>
-                <input onChange={handleChange} value={values.name} id="age" type="number" className="rounded-2xl" placeholder={objectData.age} disabled={editBtn==0} />
-                <label htmlFor="status">Status</label>
-                <select onChange={handleChange} className="rounded-2xl" name="status" id="status" disabled={editBtn==0}>
-                    <option selected value={values.status}>{values.status}</option>
-                    <option value={objectData.status == "passive" ? "active" : "passive"}>{objectData.status == "passive" ? "active" : "passive"}</option>
-                </select>
-                <label htmlFor="role">Role</label>
-                <select onChange={handleChange} className="rounded-2xl" name="role" id="role" disabled={editBtn==0}>
-                    <option selected value={values.role}>{values.role}</option>
-                    <option value={objectData.role == "user" ? "admin" : "user"}>{objectData.role == "user" ? "admin" : "user"}</option>
-                </select>
-                <input onChange={handleChange} type="text" id="img" hidden value={file ? URL.createObjectURL(file) : values.img}/>
-                <button type="submit" className="bg-green-500 w-44 pt-2 pb-2 mt-3 text-lg rounded-lg text-white" style={editBtn == 0 ?{visibility:"hidden"}:{visibility:"visible"}}>Submit</button>
-            </form> */}
-
-        </div>
         );
-}
+    }
+
+    const ProductData = () => {
+        return(
+            <div className=" flex flex-col grow p-3 gap-1">
+                <div className="flex">
+                    <div className="ml-auto">
+                        <button onClick={() => setEditBtn(1)} className="bg-green-300 pt-1 pb-1 ps-3 pe-3 rounded-2xl me-2 text-lg">Edit</button>
+                        <a href="" className="bg-red-300 pt-1 pb-1 ps-3 pe-3 rounded-2xl text-lg">Delete</a>
+                    </div>
+                </div>
+                <form method="POST" className="flex flex-col" action={"/products/update/"+objectData.id}>
+                    <input type="hidden" name="_token" id="token" value={csrfToken}></input>
+                    <label htmlFor="name">Name</label>
+                    <input name="name" id="name" type="text" required className="rounded-2xl" placeholder={objectData.name} disabled={editBtn==0}/>
+                    <label htmlFor="qty">Quantity</label>
+                    <input name="qty" id="qty" type="number" required className="rounded-2xl" placeholder={objectData.qty} disabled={editBtn==0}/>
+                    <label htmlFor="price">Price</label>
+                    <input name="price" id="price" type="number" required className="rounded-2xl" placeholder={objectData.price} disabled={editBtn==0} />
+                    <label htmlFor="weight">Weight</label>
+                    <input name="weight" id="weight" type="number" required className="rounded-2xl" placeholder={objectData.weight} disabled={editBtn==0} />
+                    <label htmlFor="availability">Availability</label>
+                    <input name="availability" id="availability" type="text" required className="rounded-2xl" placeholder={objectData.availability} disabled={editBtn==0} />
+                    <label htmlFor="category">Category</label>
+                    <input name="category" id="category" type="text" required className="rounded-2xl" placeholder={objectData.category} disabled={editBtn==0} />
+                    <input type="text" name="img" id="img" hidden value={file ? URL.createObjectURL(file) : objectData.img}/>
+                    <input type="hidden" name="_method" value="PUT"></input>
+                    <button type="submit" className="bg-green-500 w-44 pt-2 pb-2 mt-3 text-lg rounded-lg text-white" style={editBtn == 0 ?{visibility:"hidden"}:{visibility:"visible"}}>Submit</button>
+                </form>
+            </div>
+        );
+    }
 
     return (
         <DashboardLayout user={auth.user}>
@@ -107,7 +138,8 @@ export default function ObjectView({ auth, objectData, csrfToken }) {
                     {/* //* Keeping this code because it look hilarious */}
                     {/* <input className="hidden" type="file" id='file' onChange={e=>{if(e.target.files && e.target.files.length > 0){setValues(values => ({...values,img: URL.createObjectURL(e.target.files[0])}))}}}/> */}
                 </div>
-                <UserData/>
+                {viewType == "show" && objectType == "user" && <UserData/>}
+                {viewType == "show" && objectType == "product" && <ProductData/>}
             </div>
         </DashboardLayout>
     );

@@ -15,7 +15,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->select('id', 'name', 'img', 'email', 'age', 'status', 'role')->get();
+        $users = DB::table('users')->get();
         $type = "users";
 
         return Inertia::render('list/List', [
@@ -49,6 +49,8 @@ class UsersController extends Controller
         return Inertia::render('ObjectView/ObjectView', [
             "objectData" => $user,
             "csrfToken" => csrf_token(),
+            "viewType" => "show",
+            "objectType" => "user",
         ]);
     }
 

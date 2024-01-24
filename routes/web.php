@@ -42,6 +42,10 @@ Route::get('/users/delete/{id}', [UsersController::class, 'destroy'])->middlewar
 Route::put('/users/update/{id}', [UsersController::class, 'update'])->middleware(['auth', 'verified'])->name('updateuser');
 
 Route::get('/products', [ProductsController::class, 'index'])->middleware(['auth', 'verified'])->name('products');
+Route::get('/products/new', [ProductsController::class, 'create'])->middleware(['auth', 'verified'])->name('addproduct');
+Route::get('/products/view/{id}', [ProductsController::class, 'show'])->middleware(['auth', 'verified'])->name('viewproduct');
+Route::get('/products/delete/{id}', [ProductsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('deleteproduct');
+Route::put('/products/update/{id}', [ProductsController::class, 'update'])->middleware(['auth', 'verified'])->name('updateproduct');
 
 Route::get('/yeet', function () {
     return Inertia::render('login/Login');
