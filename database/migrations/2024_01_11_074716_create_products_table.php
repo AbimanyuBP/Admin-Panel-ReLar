@@ -16,6 +16,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->integer('qty');
+            $table->integer('price');
+            $table->integer('weight');
+            $table->string('availability');
+            $table->string('category');
             $table->string('img');
         });
     }

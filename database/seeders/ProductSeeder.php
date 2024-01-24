@@ -21,6 +21,12 @@ class ProductSeeder extends Seeder
                 'name' => $name_list[$i],
                 'qty' => random_int(10, 50),
                 'img' => '\images\images\\'. $name_list[$i] .'.jpg',
+                'availability' => 'available',
+                'price' => random_int(1000000, 6000000),
+                'category' => 'electronic',
+                'weight' => random_int(1, 3),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ]);
         }
     }

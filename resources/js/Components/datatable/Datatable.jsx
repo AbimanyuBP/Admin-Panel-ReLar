@@ -80,8 +80,28 @@ const Datatable = ( {list, listType} ) => {
       },
       {
         field: "qty",
-        headerName: "Amount in Storage",
-        width: 230,
+        headerName: "Quantity",
+        width: 100,
+      },
+      {
+        field: "price",
+        headerName: "Price",
+        width: 100,
+      },
+      {
+        field: "weight",
+        headerName: "Weight",
+        width: 100,
+      },
+      {
+        field: "availability",
+        headerName: "Availability",
+        width: 150,
+      },
+      {
+        field: "category",
+        headerName: "Category",
+        width: 100,
       },
     ];
 
