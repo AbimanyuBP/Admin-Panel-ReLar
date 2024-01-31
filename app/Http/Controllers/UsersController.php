@@ -20,6 +20,7 @@ class UsersController extends Controller
 
         return Inertia::render('list/List', [
             "dataList" => $users,
+            "csrfToken" => csrf_token(),
             "type" => $type
         ]);
     }
@@ -85,6 +86,7 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Product::destroy((int) $id);
+        return Redirect::route('users');
     }
 }

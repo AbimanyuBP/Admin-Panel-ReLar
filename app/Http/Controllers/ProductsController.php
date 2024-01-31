@@ -20,6 +20,7 @@ class ProductsController extends Controller
 
         return Inertia::render('list/List', [
             "dataList" => $products,
+            "csrfToken" => csrf_token(),
             "type" => $type
         ]);
     }
@@ -84,8 +85,9 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(string $id)
     {
-        //
+        Product::destroy((int) $id);
+        return Redirect::route('products');
     }
 }

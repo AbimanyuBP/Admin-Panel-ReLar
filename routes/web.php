@@ -38,13 +38,13 @@ Route::get('/dashboard', function () {
 Route::get('/users', [UsersController::class, 'index'])->middleware(['auth', 'verified'])->name('users');
 Route::get('/users/new', [UsersController::class, 'create'])->middleware(['auth', 'verified'])->name('adduser');
 Route::get('/users/view/{id}', [UsersController::class, 'show'])->middleware(['auth', 'verified'])->name('viewuser');
-Route::get('/users/delete/{id}', [UsersController::class, 'destroy'])->middleware(['auth', 'verified'])->name('deleteuser');
+Route::delete('/users/delete/{id}', [UsersController::class, 'destroy'])->middleware(['auth', 'verified'])->name('deleteuser');
 Route::put('/users/update/{id}', [UsersController::class, 'update'])->middleware(['auth', 'verified'])->name('updateuser');
 
 Route::get('/products', [ProductsController::class, 'index'])->middleware(['auth', 'verified'])->name('products');
 Route::get('/products/new', [ProductsController::class, 'create'])->middleware(['auth', 'verified'])->name('addproduct');
 Route::get('/products/view/{id}', [ProductsController::class, 'show'])->middleware(['auth', 'verified'])->name('viewproduct');
-Route::get('/products/delete/{id}', [ProductsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('deleteproduct');
+Route::delete('/products/delete/{id}', [ProductsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('deleteproduct');
 Route::put('/products/update/{id}', [ProductsController::class, 'update'])->middleware(['auth', 'verified'])->name('updateproduct');
 
 Route::get('/yeet', function () {
