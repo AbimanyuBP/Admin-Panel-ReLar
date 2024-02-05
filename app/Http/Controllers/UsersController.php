@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Http\Request;
 
@@ -30,7 +31,12 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('ObjectView/ObjectView', [
+            "objectData" => NULL,
+            "csrfToken" => csrf_token(),
+            "viewType" => "new",
+            "objectType" => "user",
+        ]);
     }
 
     /**
@@ -38,7 +44,21 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $img = file_get_contents($request->img);
+        // $destDir = "\images\users\\";
+        // $filename = $destDir.$request->name."\pic.jpg";
+        // file_put_contents($filename,$img);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'age' => $request->age,
+            'status'=> $request->status,
+            'role' => $request->role,
+            // 'img' => $filename,
+            'password' => Hash::make("12345678"),
+        ]);
+
+        return Redirect::route('users');
     }
 
     /**
@@ -53,14 +73,6 @@ class UsersController extends Controller
             "viewType" => "show",
             "objectType" => "user",
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**

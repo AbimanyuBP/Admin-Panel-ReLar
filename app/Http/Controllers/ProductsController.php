@@ -30,7 +30,12 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('ObjectView/ObjectView', [
+            "objectData" => NULL,
+            "csrfToken" => csrf_token(),
+            "viewType" => "new",
+            "objectType" => "product",
+        ]);
     }
 
     /**
@@ -38,7 +43,18 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Product::create([
+            'name' => $request['name'],
+            'qty' => $request['qty'],
+            'price' => $request['price'],
+            'weight' => $request['weight'],
+            'availability' => $request['availability'],
+            'category' => $request['category'],
+            // Temporary Image data
+            'img' => "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+        ]);
+
+        return Redirect::route('products');
     }
 
     /**
@@ -76,7 +92,7 @@ class ProductsController extends Controller
             'weight' => $request['weight'],
             'availability' => $request['availability'],
             'category' => $request['category'],
-            'img' => $request['img'],
+            'img' => "\images\misc\no-image-icon.PNG",
         ]);
         
         return Redirect::route('products');
